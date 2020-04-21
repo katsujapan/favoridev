@@ -1,0 +1,25 @@
+runtime: php72
+
+handlers:
+# ルートにアクセスされた時、index.html を表示
+- url: /
+  static_files: index.html
+  upload: index.html
+  secure: always
+
+# 下層フォルダ自体にアクセスされた時、各フォルダの index.html を表示
+- url: /(.+)/$
+  static_files: \1/index.html
+  upload: .+/index\.html$
+  secure: always
+
+# 静的ファイル
+- url: /(.+\.(html|css|js|gif|png|jpg|woff|woff2|ttf|svg|eot|otf))$
+  static_files: \1
+  upload: .+\.(html|css|js|gif|png|jpg|woff|woff2|ttf|svg|eot|otf)$
+  secure: always
+
+# 上記以外は index.php
+- url: .*
+  script: auto
+  secure: always
